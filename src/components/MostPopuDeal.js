@@ -30,7 +30,6 @@ function MostPopulerDeals(props) {
             Blanditiis.
           </p>
           <button
-            id="slideLeft"
             className="absolute top-1/2 left-40 hidden md:flex"
             onClick={() => {
               document.getElementById("scrollview").scrollTo({
@@ -66,7 +65,7 @@ function MostPopulerDeals(props) {
                   <div className="inline-block px-3">
                     <div className="w-96 max-w-base overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 ease-in-out">
                       <img
-                        src="https://raw.githubusercontent.com/akshatkushwaha/baver_frontend/master/src/assets/img/fast_food_burger-wallpaper-800x600.jpg"
+                        src="https://raw.githubusercontent.com/akshatkushwaha/baver_frontend/master/src/assets/img/food1.jpg"
                         className="border-2"
                       />
                       <div className="px-4 pb-4">
@@ -84,7 +83,6 @@ function MostPopulerDeals(props) {
             </div>
           </div>
           <button
-            id="slideRight"
             className="absolute top-1/2 right-40 hidden md:flex"
             onClick={() => {
               document.getElementById("scrollview").scrollTo({
