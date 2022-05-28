@@ -28,14 +28,14 @@ const carouselsource = [
 carouselsource.map((item, key) => {
   items.push(
     <a key={key}>
-      <div className="absolute top-1/6 ml-5 md:top-1/3 md:ml-40 w-2/3 md:w-1/3">
+      <div className="absolute h-full w-full md:w-1/3 bg-gradient-to-r from-gray-900 pl-4 md:pl-20 flex flex-col justify-center">
         <h1 className="text-xl lg:text-8xl md:p-2 text-white font-bold">
           {item.offer}
         </h1>
         <p className="text-sm lg:text-2xl md:p-2 text-white leading-loose">
           {item.offerDetails}
         </p>
-        <button className="text-sm md:text-xl p-2 m-2 bg-orange-400 hover:bg-orange-500 rounded-lg md:p-4 text-white">
+        <button className="w-1/3 text-sm md:text-xl p-2 m-2 bg-orange-400 hover:bg-orange-500 rounded-lg md:p-4 text-white">
           Get offer
         </button>
       </div>
@@ -46,7 +46,7 @@ carouselsource.map((item, key) => {
 
 function Carousel() {
   return (
-    <section className="h-2/3">
+    <section className="relative h-auto">
       <AliceCarousel
         mouseTracking
         items={items}

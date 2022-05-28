@@ -48,7 +48,11 @@ export default function Navbar(props) {
   }
 
   return (
-    <Disclosure as="nav" style={{ backgroundColor: "#283542" }}>
+    <Disclosure
+      as="nav"
+      style={{ backgroundColor: "#283542" }}
+      className="sticky top-0 z-50"
+    >
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -96,7 +100,7 @@ export default function Navbar(props) {
                   <a href="/">
                     <img
                       className="block lg:hidden h-8 w-auto"
-                      src="../assets/img/logo.svg"
+                      src="https://raw.githubusercontent.com/akshatkushwaha/baver_frontend/master/src/assets/img/logo.png"
                       alt="Baver"
                     />
                     <p className="hidden lg:block w-auto font-sans font-bold text-white text-3xl">

@@ -33,8 +33,3 @@ code {
 .hide-scroll-bar::-webkit-scrollbar {
   display: none;
 }
-.alice-carousel__dots{
-  position: absolute;
-  top: 90%;
-  right: 49%
-}
