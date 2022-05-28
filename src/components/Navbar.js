@@ -38,7 +38,7 @@ export default function Navbar(props) {
           type="button"
           className="bg-orange-400 px-3 py-2 rounded-lg hover:bg-orange-500"
           onClick={() => {
-            document.getElementById("login_popup").style.display = "flex";
+            document.getElementById("auth_popup").style.display = "flex";
           }}
         >
           <p className="font-sans font-bold text-white text-base ">Login</p>
@@ -160,13 +160,13 @@ export default function Navbar(props) {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="z-10 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="z-50 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         <a
                           href={`/${username}`}
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         >
-                          {username}
+                          Your profile
                         </a>
                       </Menu.Item>
                       <Menu.Item>

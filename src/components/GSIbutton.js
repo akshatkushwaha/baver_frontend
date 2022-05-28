@@ -45,11 +45,14 @@ function GSIbutton(props) {
     google.accounts.id.renderButton(
       document.getElementById("buttonDiv"),
       {
+        type: "icon",
         theme: "outline",
         size: "large",
       } // customization attributes
     );
-    google.accounts.id.prompt(); // also display the One Tap dialog
+    if (localStorage.getItem("loggedin") !== "true") {
+      google.accounts.id.prompt(); // also display the One Tap dialog
+    }
   };
 
   return <div id="buttonDiv" className="pr-2"></div>;

@@ -1,117 +1,65 @@
-function Carousel() {
-  return (
-    <>
-      <div id="default-carousel" className="relative" data-carousel="static">
-        <div className="overflow-hidden relative h-56 rounded-lg sm:h-64 xl:h-80 2xl:h-96">
-          <div
-            className="duration-700 ease-in-out absolute inset-0 transition-all transform translate-x-0 z-20"
-            data-carousel-item=""
-          >
-            <span className="absolute top-1/2 left-1/2 text-2xl font-semibold text-white -translate-x-1/2 -translate-y-1/2 sm:text-3xl dark:text-gray-800">
-              First Slide
-            </span>
-            <img
-              src="../assets/img/c1.jpg"
-              className="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2"
-              alt="..."
-            />
-          </div>
+import { toHaveFormValues } from "@testing-library/jest-dom/dist/matchers";
+import AliceCarousel from "react-alice-carousel";
+import "react-alice-carousel/lib/alice-carousel.css";
 
-          <div
-            className="duration-700 ease-in-out absolute inset-0 transition-all transform translate-x-full z-10"
-            data-carousel-item=""
-          >
-            <img
-              src="../assets/img/c1.jpg"
-              className="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2"
-              alt="..."
-            />
-          </div>
+const handleDragStart = (e) => e.preventDefault();
+var items = [];
 
-          <div
-            className="duration-700 ease-in-out absolute inset-0 transition-all transform -translate-x-full z-10"
-            data-carousel-item=""
-          >
-            <img
-              src="../assets/img/c1.jpg"
-              className="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2"
-              alt="..."
-            />
-          </div>
-        </div>
+const carouselsource = [
+  {
+    offer: "Some offer",
+    offerDetails:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat odio id nunc tincidunt, sit amet laoreet libero scelerisque.",
+    img: "https://raw.githubusercontent.com/akshatkushwaha/baver_frontend/master/src/assets/img/c1.jpg",
+  },
+  {
+    offer: "Some offer",
+    offerDetails:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat odio id nunc tincidunt, sit amet laoreet libero scelerisque.",
+    img: "https://raw.githubusercontent.com/akshatkushwaha/baver_frontend/master/src/assets/img/c2.jpg",
+  },
+  {
+    offer: "Some offer",
+    offerDetails:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat odio id nunc tincidunt, sit amet laoreet libero scelerisque.",
+    img: "https://raw.githubusercontent.com/akshatkushwaha/baver_frontend/master/src/assets/img/c3.jpg",
+  },
+];
 
-        <div className="flex absolute bottom-5 left-1/2 z-30 space-x-3 -translate-x-1/2">
-          <button
-            type="button"
-            className="w-3 h-3 rounded-full bg-white dark:bg-gray-800"
-            aria-current="true"
-            aria-label="Slide 1"
-            data-carousel-slide-to="0"
-          ></button>
-          <button
-            type="button"
-            className="w-3 h-3 rounded-full bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800"
-            aria-current="false"
-            aria-label="Slide 2"
-            data-carousel-slide-to="1"
-          ></button>
-          <button
-            type="button"
-            className="w-3 h-3 rounded-full bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800"
-            aria-current="false"
-            aria-label="Slide 3"
-            data-carousel-slide-to="2"
-          ></button>
-        </div>
-
-        <button
-          type="button"
-          className="flex absolute top-0 left-0 z-30 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none"
-          data-carousel-prev=""
-        >
-          <span className="inline-flex justify-center items-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-            <svg
-              className="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15 19l-7-7 7-7"
-              ></path>
-            </svg>
-            <span className="hidden">Previous</span>
-          </span>
-        </button>
-        <button
-          type="button"
-          className="flex absolute top-0 right-0 z-30 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none"
-          data-carousel-next=""
-        >
-          <span className="inline-flex justify-center items-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-            <svg
-              className="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M9 5l7 7-7 7"
-              ></path>
-            </svg>
-            <span className="hidden">Next</span>
-          </span>
+carouselsource.map((item, key) => {
+  items.push(
+    <a key={key}>
+      <div className="absolute top-1/6 ml-5 md:top-1/3 md:ml-40 w-2/3 md:w-1/3">
+        <h1 className="text-xl lg:text-8xl md:p-2 text-white font-bold">
+          {item.offer}
+        </h1>
+        <p className="text-sm lg:text-2xl md:p-2 text-white leading-loose">
+          {item.offerDetails}
+        </p>
+        <button className="text-sm md:text-xl p-2 m-2 bg-orange-400 hover:bg-orange-500 rounded-lg md:p-4 text-white">
+          Get offer
         </button>
       </div>
-    </>
+      <img src={item.img} onDragStart={handleDragStart} role="presentation" />
+    </a>
+  );
+});
+
+function Carousel() {
+  return (
+    <section className="h-2/3">
+      <AliceCarousel
+        mouseTracking
+        items={items}
+        infinite={true}
+        autoHeight={true}
+        autoPlay={true}
+        autoPlayInterval={2000}
+        autoPlayStrategy={"all"}
+        disableButtonsControls={true}
+        disableDotsControls={false}
+      />
+    </section>
   );
 }
 

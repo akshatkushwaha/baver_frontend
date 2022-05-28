@@ -4,17 +4,11 @@ import About from "./Pages/About";
 import ContactPage from "./Pages/Contactpage";
 import Homepage from "./Pages/Homepage";
 import ErrorPage from "./Pages/ErrorPage";
-import RegisterPopup from "./components/RegistionPopup";
 import LoginPopup from "./components/LoginPopUP";
 
 function App() {
   const [isLoggedin, setLoginStatus] = useState(false);
-  var popup = (
-    <>
-      <LoginPopup />
-      <RegisterPopup />
-    </>
-  );
+  var popup = <LoginPopup />;
 
   if (isLoggedin === false && localStorage.getItem("loggedin") === "true") {
     setLoginStatus(true);
