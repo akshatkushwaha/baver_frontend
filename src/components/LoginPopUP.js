@@ -8,23 +8,76 @@ function LoginPopup() {
   const [rememberMe, setRememberMe] = useState(true);
   const [name, setName] = useState("");
   const [cpassword, setCPassword] = useState("");
+  var error = "";
 
-  function handleNativeLogin() {
-    var storage = localStorage;
-    if (rememberMe === false) {
-      storage = sessionStorage;
-    }
-    setPassword(sha512(password));
-    alert(password);
-    // call API for login
-    storage.setItem("loggedin", true);
-    // storage.setItem("token", response.sub);
-    // storage.setItem("username", response.email);
-    // storage.setItem("pictureURL", response.picture);
-    storage.setItem("username", email);
+  function validateEmail(email) {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
   }
 
-  function handleNativeRegistration() {}
+  function handleNativeLogin() {
+    error = "";
+    if (email.length === 0 || !validateEmail(email)) {
+      error += "Invalid Email<br>";
+    }
+    if (password.length === 0) {
+      error += "Password must be atlead 8 character long<br>";
+    }
+
+    if (error.length !== 0) {
+      document.getElementById("error_box").style.display = "flex";
+      document.getElementById("error_text").innerHTML = error;
+    } else {
+      document.getElementById("error_box").style.display = "none";
+      var storage = localStorage;
+      if (rememberMe === false) {
+        storage = sessionStorage;
+      }
+      setPassword(sha512(password));
+      // call API for login
+      storage.setItem("loggedin", true);
+      // storage.setItem("token", response.sub);
+      // storage.setItem("username", response.email);
+      // storage.setItem("pictureURL", response.picture);
+      storage.setItem("username", email);
+    }
+  }
+
+  function handleNativeRegistration() {
+    error = "";
+    if (name.length === 0) {
+      error += "Enter valid name<br>";
+    }
+    if (email.length === 0 || !validateEmail(email)) {
+      error += "Invalid Email<br>";
+    }
+    if (password.length === 0) {
+      error += "Password must be atlead 8 character long<br>";
+    }
+    if (password !== cpassword) {
+      error += "Password dosen't match<br>";
+    }
+    if (error.length !== 0) {
+      document.getElementById("error_box").style.display = "flex";
+      document.getElementById("error_text").innerHTML = error;
+    } else {
+      document.getElementById("error_box").style.display = "none";
+      var storage = localStorage;
+      if (rememberMe === false) {
+        storage = sessionStorage;
+      }
+      setPassword(sha512(password));
+      // call API for login
+      storage.setItem("loggedin", true);
+      // storage.setItem("token", response.sub);
+      // storage.setItem("username", response.email);
+      // storage.setItem("pictureURL", response.picture);
+      storage.setItem("username", email);
+    }
+  }
 
   return (
     <>
@@ -63,7 +116,7 @@ function LoginPopup() {
               <h3 className="mb-4 text-2xl font-medium text-gray-900 dark:text-white text-center ">
                 Sign in
               </h3>
-              <form className="space-y-6 w-3/4">
+              <section className="space-y-6 w-3/4">
                 <div>
                   <label
                     htmlFor="email"
@@ -129,15 +182,14 @@ function LoginPopup() {
                   </a>
                 </div>
                 <button
-                  type="submit"
                   className="w-full text-white bg-orange-400 hover:bg-orange-500 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
-                  onSubmit={() => {
+                  onClick={() => {
                     handleNativeLogin();
                   }}
                 >
                   Login
                 </button>
-              </form>
+              </section>
               <div className="text-sm font-medium text-gray-500 dark:text-gray-300 pt-4">
                 Not registered?
                 <button
@@ -147,6 +199,7 @@ function LoginPopup() {
                       "none";
                     document.getElementById("register_popup").style.display =
                       "flex";
+                    document.getElementById("error_box").style.display = "none";
                   }}
                 >
                   Create account
@@ -161,7 +214,7 @@ function LoginPopup() {
               <h3 className="mb-4 text-2xl font-medium text-gray-900 dark:text-white text-center">
                 Register
               </h3>
-              <form className="space-y-6 w-3/4">
+              <section className="space-y-6 w-3/4">
                 <div>
                   <label
                     htmlFor="email"
@@ -243,13 +296,13 @@ function LoginPopup() {
                 <button
                   type="submit"
                   className="w-full text-white bg-orange-400 hover:bg-orange-500 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
-                  onSubmit={() => {
+                  onClick={() => {
                     handleNativeRegistration();
                   }}
                 >
                   Register
                 </button>
-              </form>
+              </section>
               <div className="text-sm font-medium text-gray-500 dark:text-gray-300 pt-4">
                 Already a user?
                 <button
@@ -259,10 +312,16 @@ function LoginPopup() {
                       "flex";
                     document.getElementById("register_popup").style.display =
                       "none";
+                    document.getElementById("error_box").style.display = "none";
                   }}
                 >
                   Login
                 </button>
+              </div>
+            </div>
+            <div id="error_box" className="hidden justify-center">
+              <div className="bg-red-200 w-3/4 p-4 rounded">
+                <p id="error_text" className="text-sm text-red-600"></p>
               </div>
             </div>
             <div className="flex justify-center">
