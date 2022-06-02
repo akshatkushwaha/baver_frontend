@@ -1,6 +1,5 @@
 import GSIbutton from "./GSIbutton";
 import { useState } from "react";
-import { sha512 } from "crypto-hash";
 
 function LoginPopup(props) {
   const [loginSection, setLoginSection] = useState(true);
@@ -41,7 +40,6 @@ function LoginPopup(props) {
       if (rememberMe === false) {
         storage = sessionStorage;
       }
-      setPassword(sha512(password));
       // call API for login
     }
   }
@@ -66,7 +64,6 @@ function LoginPopup(props) {
       if (rememberMe === false) {
         storage = sessionStorage;
       }
-      setPassword(sha512(password));
       // call API for registration
     }
   }
