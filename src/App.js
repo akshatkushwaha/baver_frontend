@@ -8,11 +8,10 @@ import LoginPopup from "./components/LoginPopUP";
 
 function App() {
   const [isLoggedin, setLoginStatus] = useState(false);
-  var popup = <LoginPopup />;
+  const [loginPopup, setLoginPopup] = useState(false);
 
-  if (isLoggedin === false && localStorage.getItem("loggedin") === "true") {
+  if (isLoggedin === false && localStorage.getItem("token")) {
     setLoginStatus(true);
-    popup = <></>;
   }
 
   return (
@@ -23,17 +22,14 @@ function App() {
             exact
             path="/"
             element={
-              <Homepage
-                isLoggedin={isLoggedin}
-                setLoginStatus={setLoginStatus}
-              />
+              <Homepage isLoggedin={isLoggedin} setLoginPopup={setLoginPopup} />
             }
           />
           <Route
             exact
             path="/about"
             element={
-              <About isLoggedin={isLoggedin} setLoginStatus={setLoginStatus} />
+              <About isLoggedin={isLoggedin} setLoginPopup={setLoginPopup} />
             }
           />
           <Route
@@ -42,34 +38,14 @@ function App() {
             element={
               <ContactPage
                 isLoggedin={isLoggedin}
-                setLoginStatus={setLoginStatus}
+                setLoginPopup={setLoginPopup}
               />
             }
           />
-          {/* <Route
-            exact
-            path="/auth/login"
-            element={
-              <Authpage
-                setLoginStatus={setLoginStatus}
-                isLoggedin={isLoggedin}
-              />
-            }
-          />
-          <Route
-            exact
-            path="/auth/register"
-            element={
-              <Register
-                setLoginStatus={setLoginStatus}
-                isLoggedin={isLoggedin}
-              />
-            }
-          /> */}
           <Route path="*" element={<ErrorPage isLoggedin={isLoggedin} />} />
         </Routes>
       </Router>
-      {popup}
+      <LoginPopup loginPopup={loginPopup} setLoginPopup={setLoginPopup} />
     </>
   );
 }

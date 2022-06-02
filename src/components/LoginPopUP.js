@@ -2,13 +2,19 @@ import GSIbutton from "./GSIbutton";
 import { useState } from "react";
 import { sha512 } from "crypto-hash";
 
-function LoginPopup() {
+function LoginPopup(props) {
+  const [loginSection, setLoginSection] = useState(true);
+  const [registerSection, setRegisterSection] = useState(false);
+  const [errorBox, setErrorBox] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [activeSubmitButton, setActiveSubmitButton] = useState(true);
+
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(true);
-  const [name, setName] = useState("");
   const [cpassword, setCPassword] = useState("");
-  var error = "";
+  const [rememberMe, setRememberMe] = useState(true);
 
   function validateEmail(email) {
     return String(email)
@@ -19,72 +25,58 @@ function LoginPopup() {
   }
 
   function handleNativeLogin() {
-    error = "";
+    setErrorMessage("");
     if (email.length === 0 || !validateEmail(email)) {
-      error += "Invalid Email<br>";
-    }
-    if (password.length === 0) {
-      error += "Password must be atlead 8 character long<br>";
+      setErrorMessage("Please enter a valid email address");
+    } else if (password.length === 0) {
+      setErrorMessage("Please enter a password");
     }
 
-    if (error.length !== 0) {
-      document.getElementById("error_box").style.display = "flex";
-      document.getElementById("error_text").innerHTML = error;
+    if (errorMessage.length !== 0) {
+      setErrorBox(true);
     } else {
-      document.getElementById("error_box").style.display = "none";
+      setErrorBox(false);
+      setActiveSubmitButton(false);
       var storage = localStorage;
       if (rememberMe === false) {
         storage = sessionStorage;
       }
       setPassword(sha512(password));
       // call API for login
-      storage.setItem("loggedin", true);
-      // storage.setItem("token", response.sub);
-      // storage.setItem("username", response.email);
-      // storage.setItem("pictureURL", response.picture);
-      storage.setItem("username", email);
     }
   }
 
   function handleNativeRegistration() {
-    error = "";
+    setErrorMessage("");
     if (name.length === 0) {
-      error += "Enter valid name<br>";
+      setErrorMessage("Please enter your name");
+    } else if (email.length === 0 || !validateEmail(email)) {
+      setErrorMessage("Please enter a valid email address");
+    } else if (password.length === 0) {
+      setErrorMessage("Please enter a password");
+    } else if (password !== cpassword) {
+      setErrorMessage("Passwords do not match");
     }
-    if (email.length === 0 || !validateEmail(email)) {
-      error += "Invalid Email<br>";
-    }
-    if (password.length === 0) {
-      error += "Password must be atlead 8 character long<br>";
-    }
-    if (password !== cpassword) {
-      error += "Password dosen't match<br>";
-    }
-    if (error.length !== 0) {
-      document.getElementById("error_box").style.display = "flex";
-      document.getElementById("error_text").innerHTML = error;
+    if (errorMessage.length !== 0) {
+      setErrorBox(true);
     } else {
-      document.getElementById("error_box").style.display = "none";
+      setErrorBox(false);
+      setActiveSubmitButton(false);
       var storage = localStorage;
       if (rememberMe === false) {
         storage = sessionStorage;
       }
       setPassword(sha512(password));
-      // call API for login
-      storage.setItem("loggedin", true);
-      // storage.setItem("token", response.sub);
-      // storage.setItem("username", response.email);
-      // storage.setItem("pictureURL", response.picture);
-      storage.setItem("username", email);
+      // call API for registration
     }
   }
 
   return (
     <>
       <div
-        id="auth_popup"
-        style={{ display: "none", position: "fixed", top: 0 }}
-        className="absolute w-full h-full flex items-center justify-center backdrop-blur-sm backdrop-grayscale-[.5] w3-container w3-animate-top z-50"
+        className={`${
+          props.loginPopup ? "flex" : "hidden"
+        } absolute top-0 w-full h-full items-center justify-center backdrop-blur-sm backdrop-grayscale-[.5] w3-container w3-animate-top z-50`}
       >
         <div className="relative p-4 w-full max-w-md h-full md:h-auto">
           <div className="relative bg-white rounded-lg shadow dark:bg-gray-700 pb-4">
@@ -92,7 +84,7 @@ function LoginPopup() {
               type="button"
               className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
               onClick={() => {
-                document.getElementById("auth_popup").style.display = "none";
+                props.setLoginPopup(false);
               }}
             >
               <svg
@@ -109,9 +101,9 @@ function LoginPopup() {
               </svg>
             </button>
             <div
-              id="login_popup"
-              style={{ display: "flex" }}
-              className="py-6 flex-col justify-center items-center"
+              className={`${
+                loginSection ? "flex" : "hidden"
+              } py-6 flex-col justify-center items-center`}
             >
               <h3 className="mb-4 text-2xl font-medium text-gray-900 dark:text-white text-center ">
                 Sign in
@@ -136,7 +128,7 @@ function LoginPopup() {
                     required
                   />
                 </div>
-                <div>
+                <div className="relative">
                   <label
                     htmlFor="password"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
@@ -144,7 +136,7 @@ function LoginPopup() {
                     Password
                   </label>
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     name="password"
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
@@ -154,6 +146,16 @@ function LoginPopup() {
                     }}
                     required
                   />
+
+                  <button
+                    type="button"
+                    className="absolute right-2 top-1/2 py-1 px-2 rounded-md text-gray-500"
+                    onClick={() => {
+                      setShowPassword(!showPassword);
+                    }}
+                  >
+                    {showPassword ? "Hide" : "Show"}
+                  </button>
                 </div>
                 <div className="flex justify-between">
                   <div className="flex items-start">
@@ -182,7 +184,11 @@ function LoginPopup() {
                   </a>
                 </div>
                 <button
-                  className="w-full text-white bg-orange-400 hover:bg-orange-500 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
+                  className={`${
+                    activeSubmitButton
+                      ? "bg-orange-400 hover:bg-orange-500 focus:ring-orange-300"
+                      : "bg-gray-500"
+                  } w-full text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center`}
                   onClick={() => {
                     handleNativeLogin();
                   }}
@@ -195,11 +201,9 @@ function LoginPopup() {
                 <button
                   className="text-blue-700 hover:underline dark:text-blue-500 px-2"
                   onClick={() => {
-                    document.getElementById("login_popup").style.display =
-                      "none";
-                    document.getElementById("register_popup").style.display =
-                      "flex";
-                    document.getElementById("error_box").style.display = "none";
+                    setLoginSection(false);
+                    setRegisterSection(true);
+                    setErrorBox(false);
                   }}
                 >
                   Create account
@@ -207,9 +211,9 @@ function LoginPopup() {
               </div>
             </div>
             <div
-              id="register_popup"
-              style={{ display: "none" }}
-              className="py-6 flex-col items-center"
+              className={`${
+                registerSection ? "flex" : "hidden"
+              } py-6 flex-col justify-center items-center`}
             >
               <h3 className="mb-4 text-2xl font-medium text-gray-900 dark:text-white text-center">
                 Register
@@ -254,7 +258,7 @@ function LoginPopup() {
                     required
                   />
                 </div>
-                <div>
+                <div className="relative">
                   <label
                     htmlFor="password"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
@@ -262,7 +266,7 @@ function LoginPopup() {
                     Password
                   </label>
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     name="password"
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
@@ -272,8 +276,16 @@ function LoginPopup() {
                     }}
                     required
                   />
+                  <button
+                    className="absolute right-2 top-1/2 py-1 px-2 rounded-md text-gray-500"
+                    onClick={() => {
+                      setShowPassword(!showPassword);
+                    }}
+                  >
+                    {showPassword ? "Hide" : "Show"}
+                  </button>
                 </div>
-                <div>
+                <div className="relative">
                   <label
                     htmlFor="password"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
@@ -281,7 +293,7 @@ function LoginPopup() {
                     Confirm Password
                   </label>
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     name="password"
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
@@ -294,8 +306,11 @@ function LoginPopup() {
                 </div>
 
                 <button
-                  type="submit"
-                  className="w-full text-white bg-orange-400 hover:bg-orange-500 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
+                  className={`${
+                    activeSubmitButton
+                      ? "bg-orange-400 hover:bg-orange-500 focus:ring-orange-300"
+                      : "bg-gray-500"
+                  } w-full text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center`}
                   onClick={() => {
                     handleNativeRegistration();
                   }}
@@ -308,20 +323,19 @@ function LoginPopup() {
                 <button
                   className="text-blue-700 hover:underline dark:text-blue-500 px-2"
                   onClick={() => {
-                    document.getElementById("login_popup").style.display =
-                      "flex";
-                    document.getElementById("register_popup").style.display =
-                      "none";
-                    document.getElementById("error_box").style.display = "none";
+                    setLoginSection(true);
+                    setRegisterSection(false);
+                    setErrorBox(false);
+                    setActiveSubmitButton(true);
                   }}
                 >
                   Login
                 </button>
               </div>
             </div>
-            <div id="error_box" className="hidden justify-center">
+            <div className={`${errorBox ? "flex" : "hidden"} justify-center`}>
               <div className="bg-red-200 w-3/4 p-4 rounded">
-                <p id="error_text" className="text-sm text-red-600"></p>
+                <p className="text-sm text-red-600">{errorMessage}</p>
               </div>
             </div>
             <div className="flex justify-center">

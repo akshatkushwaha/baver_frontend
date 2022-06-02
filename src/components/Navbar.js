@@ -24,29 +24,6 @@ export default function Navbar(props) {
     return classes.filter(Boolean).join(" ");
   }
 
-  function renderAvatar() {
-    if (props.isLoggedin) {
-      return (
-        <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-          <span className="sr-only">Open user menu</span>
-          <img className="h-8 w-8 rounded-full" src={picture} alt="" />
-        </Menu.Button>
-      );
-    } else {
-      return (
-        <button
-          type="button"
-          className="bg-orange-400 px-3 py-2 rounded-lg hover:bg-orange-500"
-          onClick={() => {
-            document.getElementById("auth_popup").style.display = "flex";
-          }}
-        >
-          <p className="font-sans font-bold text-white text-base ">Login</p>
-        </button>
-      );
-    }
-  }
-
   return (
     <Disclosure
       as="nav"
@@ -154,7 +131,28 @@ export default function Navbar(props) {
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="ml-3 relative">
-                  <div>{renderAvatar()}</div>
+                  {props.isLoggedin ? (
+                    <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                      <span className="sr-only">Open user menu</span>
+                      <img
+                        className="h-8 w-8 rounded-full"
+                        src={picture}
+                        alt=""
+                      />
+                    </Menu.Button>
+                  ) : (
+                    <button
+                      type="button"
+                      className="bg-orange-400 px-3 py-2 rounded-lg hover:bg-orange-500"
+                      onClick={() => {
+                        props.setLoginPopup(true);
+                      }}
+                    >
+                      <p className="font-sans font-bold text-white text-base ">
+                        Login
+                      </p>
+                    </button>
+                  )}
                   <Transition
                     as={Fragment}
                     enter="transition ease-out duration-100"

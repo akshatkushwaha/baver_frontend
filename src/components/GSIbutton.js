@@ -2,10 +2,9 @@ import React from "react";
 
 function GSIbutton(props) {
   function handleLogin(response) {
-    localStorage.setItem("loggedin", true);
-    localStorage.setItem("token", response.sub);
-    localStorage.setItem("username", response.email);
-    localStorage.setItem("pictureURL", response.picture);
+    //call /auth/google
+    //if success, set isLoggedin to true
+    // localStorage.setItem("token", apiresponse.data.token);
     window.location.href = "/";
   }
 
