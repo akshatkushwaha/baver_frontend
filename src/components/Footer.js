@@ -32,23 +32,27 @@ function Footer() {
             </h2>
             <ul className="text-gray-300">
               <li className="mb-4">
-                <a href="#" className="hover:underline">
-                  Discord Server
-                </a>
-              </li>
-              <li className="mb-4">
-                <a href="#" className="hover:underline">
+                <a
+                  href="https://www.twitter.com/baver"
+                  rel="noreferrer"
+                  className="hover:underline"
+                >
+                  {" "}
                   Twitter
                 </a>
               </li>
               <li className="mb-4">
-                <a href="#" className="hover:underline">
+                <a
+                  href="https://www.facebook.com/baver"
+                  rel="noreferrer"
+                  className="hover:underline"
+                >
                   Facebook
                 </a>
               </li>
-              <a href="#" className="hover:underline"></a>
+
               <li className="mb-4">
-                <a href="#" className="hover:underline">
+                <a href="/contact" className="hover:underline">
                   Contact Us
                 </a>
               </li>
@@ -60,17 +64,12 @@ function Footer() {
             </h2>
             <ul className="text-gray-300">
               <li className="mb-4">
-                <a href="#" className="hover:underline">
+                <a href="/privacypolicy" className="hover:underline">
                   Privacy Policy
                 </a>
               </li>
               <li className="mb-4">
-                <a href="#" className="hover:underline">
-                  Licensing
-                </a>
-              </li>
-              <li className="mb-4">
-                <a href="#" className="hover:underline">
+                <a href="/terms-and-conditions" className="hover:underline">
                   Terms &amp; Conditions
                 </a>
               </li>

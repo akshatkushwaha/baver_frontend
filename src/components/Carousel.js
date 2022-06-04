@@ -9,25 +9,26 @@ const carouselsource = [
     offer: "Some offer",
     offerDetails:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat odio id nunc tincidunt, sit amet laoreet libero scelerisque.",
-    img: "https://raw.githubusercontent.com/akshatkushwaha/baver_frontend/master/src/assets/img/c1.jpg",
+    img: "https://images.unsplash.com/photo-1533282960533-51328aa49826?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=800&q=80",
   },
   {
     offer: "Some offer",
     offerDetails:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat odio id nunc tincidunt, sit amet laoreet libero scelerisque.",
-    img: "https://raw.githubusercontent.com/akshatkushwaha/baver_frontend/master/src/assets/img/c2.jpg",
+    img: "https://images.unsplash.com/photo-1533282960533-51328aa49826?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=800&q=80",
   },
   {
     offer: "Some offer",
     offerDetails:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat odio id nunc tincidunt, sit amet laoreet libero scelerisque.",
-    img: "https://raw.githubusercontent.com/akshatkushwaha/baver_frontend/master/src/assets/img/c3.jpg",
+    img: "https://images.unsplash.com/photo-1533282960533-51328aa49826?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=800&q=80",
   },
 ];
 
 const items = carouselsource.map((item, key) => {
   return (
-    <a key={key} href="/">
+    // create banner
+    <a key={key} href="/" className="min-h-screen">
       <div className="absolute h-full w-full md:w-1/3 bg-gradient-to-r from-gray-900 pl-4 md:pl-20 flex flex-col justify-center">
         <h1 className="text-xl lg:text-6xl md:p-2 text-white font-bold">
           {item.offer}
@@ -39,14 +40,21 @@ const items = carouselsource.map((item, key) => {
           Get offer
         </button>
       </div>
-      <img src={item.img} onDragStart={handleDragStart} alt="presentation" />
+      <img
+        src={item.img}
+        onDragStart={handleDragStart}
+        alt="presentation"
+        className="w-full"
+      />
     </a>
   );
 });
 
 function Carousel() {
   return (
-    <section className="relative w-full flex flex-col justify-center items-center h-auto">
+    <section className="relative w-full h-fit flex flex-col justify-center items-center">
+      {/* create carousel banner */}
+
       <AliceCarousel
         mouseTracking
         items={items}

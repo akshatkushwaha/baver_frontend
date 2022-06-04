@@ -11,10 +11,11 @@ export default function Navbar(props) {
   ];
 
   const url = window.location.pathname;
-  const current = navigation.find((item) => {
+  navigation = navigation.map((item) => {
     if (item.href === url) {
-      return (item.current = true);
+      item.current = true;
     }
+    return item;
   });
 
   function classNames(...classes) {
@@ -24,7 +25,7 @@ export default function Navbar(props) {
   return (
     <Disclosure
       as="nav"
-      style={{ backgroundColor: "#283542" }}
+      style={{ backgroundColor: "#2A3844" }}
       className="sticky top-0 z-50"
     >
       {({ open }) => (

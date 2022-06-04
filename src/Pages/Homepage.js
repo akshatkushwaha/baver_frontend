@@ -1,15 +1,15 @@
 import Carousel from "../components/Carousel";
 import Footer from "../components/Footer";
-import MostPopulerDeals from "../components/PopularDeals/MostPopuDeals";
-import TopHoreca from "../components/TopHoreca/TopHoreca";
-import TopPlaces from "../components/TopPlaces";
+import MostPopulerDeals from "../components/Deals/MostPopuDeals";
+import TopHoreca from "../components/Horecas/TopHoreca";
+import TopCities from "../components/Cities/TopCities";
 
 function Homepage(props) {
   return (
     <>
       <Carousel />
       <MostPopulerDeals />
-      <TopPlaces />
+      <TopCities />
       <TopHoreca />
       <Footer />
     </>
