@@ -1,4 +1,4 @@
-import TopHorecaCard from "./TopHorecaCard";
+import Card from "./Card";
 
 function TopHoreca(propa) {
   var scrollPosition = 0;
@@ -45,10 +45,10 @@ function TopHoreca(propa) {
               className="flex overflow-x-scroll pb-10 hide-scroll-bar w-3/4 self-center"
             >
               <div className="flex flex-nowrap lg:ml-20 md:ml-10 ml-5 ">
-                <TopHorecaCard />
-                <TopHorecaCard />
-                <TopHorecaCard />
-                <TopHorecaCard />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
               </div>
             </div>
           </div>

@@ -1,3 +1,5 @@
+import Card from "./Card";
+
 const mostPopularDeals = [
   {
     category: "Food & Restaurants",
@@ -61,24 +63,7 @@ function MostPopulerDeals(props) {
           >
             <div className="flex flex-nowrap lg:ml-20 md:ml-10 ml-5 ">
               {mostPopularDeals.map((deal, index) => (
-                <a key={index} href={`/${deal.category}`}>
-                  <div className="inline-block px-3">
-                    <div className="w-96 max-w-base overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 ease-in-out">
-                      <img
-                        src="https://raw.githubusercontent.com/akshatkushwaha/baver_frontend/master/src/assets/img/food1.jpg"
-                        className="border-2"
-                      />
-                      <div className="px-4 pb-4">
-                        <h2 className="text-xl font-bold text-cyan-800 p-4">
-                          {deal.category}
-                        </h2>
-                        <button className="rounded-r-full rounded-l-full border-2 py-2 px-4 hover:bg-orange-400">
-                          Browse
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </a>
+                <Card deal={deal} key={index} />
               ))}
             </div>
           </div>

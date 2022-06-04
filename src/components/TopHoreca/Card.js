@@ -1,4 +1,4 @@
-function TopHorecaCard(porps) {
+function Card(porps) {
   return (
     <>
       <a href="/">
@@ -102,4 +102,4 @@ function TopHorecaCard(porps) {
   );
 }
 
-export default TopHorecaCard;
+export default Card;
