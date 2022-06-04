@@ -9,19 +9,19 @@ const carouselsource = [
     offer: "Some offer",
     offerDetails:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat odio id nunc tincidunt, sit amet laoreet libero scelerisque.",
-    img: "https://images.unsplash.com/photo-1533282960533-51328aa49826?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=800&q=80",
+    img: "https://github.com/akshatkushwaha/baver_frontend/blob/master/src/assets/img/carousel-1.jpg?raw=true",
   },
   {
     offer: "Some offer",
     offerDetails:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat odio id nunc tincidunt, sit amet laoreet libero scelerisque.",
-    img: "https://images.unsplash.com/photo-1533282960533-51328aa49826?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=800&q=80",
+    img: "https://github.com/akshatkushwaha/baver_frontend/blob/master/src/assets/img/carousel-1.jpg?raw=true",
   },
   {
     offer: "Some offer",
     offerDetails:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat odio id nunc tincidunt, sit amet laoreet libero scelerisque.",
-    img: "https://images.unsplash.com/photo-1533282960533-51328aa49826?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=800&q=80",
+    img: "https://github.com/akshatkushwaha/baver_frontend/blob/master/src/assets/img/carousel-1.jpg?raw=true",
   },
 ];
 
