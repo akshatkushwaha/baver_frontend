@@ -9,13 +9,8 @@ import TopPlaces from "../components/TopPlaces";
 function Homepage(props) {
   return (
     <>
-      <Navbar
-        location={"home"}
-        isLoggedin={props.isLoggedin}
-        setLoginPopup={props.setLoginPopup}
-      />
       <Carousel />
-      <Search />
+
       <MostPopulerDeals />
       <TopPlaces />
       <TopHoreca />

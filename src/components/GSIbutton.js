@@ -1,10 +1,15 @@
+import axios from "axios";
 import React from "react";
 
 function GSIbutton(props) {
-  function handleLogin(response) {
-    //call /auth/google
-    //if success, set isLoggedin to true
-    // localStorage.setItem("token", apiresponse.data.token);
+  async function handleLogin(responsePayload) {
+    const response = await axios.post("http://localhost:8000/api/googleauth", {
+      name: responsePayload.name,
+      email: responsePayload.email,
+      profile_photo_path: responsePayload.picture,
+      google_id: responsePayload.sub,
+    });
+    localStorage.setItem("token", response.data.data.token);
     window.location.href = "/";
   }
 
@@ -49,7 +54,7 @@ function GSIbutton(props) {
         size: "large",
       } // customization attributes
     );
-    if (localStorage.getItem("loggedin") !== "true") {
+    if (!localStorage.getItem("token")) {
       google.accounts.id.prompt(); // also display the One Tap dialog
     }
   };

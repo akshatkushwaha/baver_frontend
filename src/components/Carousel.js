@@ -1,8 +1,8 @@
 import AliceCarousel from "react-alice-carousel";
+import Search from "./HomeSearch";
 import "react-alice-carousel/lib/alice-carousel.css";
 
 const handleDragStart = (e) => e.preventDefault();
-var items = [];
 
 const carouselsource = [
   {
@@ -25,28 +25,28 @@ const carouselsource = [
   },
 ];
 
-carouselsource.map((item, key) => {
-  items.push(
-    <a key={key}>
+const items = carouselsource.map((item, key) => {
+  return (
+    <a key={key} href="/">
       <div className="absolute h-full w-full md:w-1/3 bg-gradient-to-r from-gray-900 pl-4 md:pl-20 flex flex-col justify-center">
-        <h1 className="text-xl lg:text-8xl md:p-2 text-white font-bold">
+        <h1 className="text-xl lg:text-6xl md:p-2 text-white font-bold">
           {item.offer}
         </h1>
-        <p className="text-sm lg:text-2xl md:p-2 text-white leading-loose">
+        <p className="text-sm lg:text-xl md:p-2 text-white leading-loose">
           {item.offerDetails}
         </p>
         <button className="w-1/3 text-sm md:text-xl p-2 m-2 bg-orange-400 hover:bg-orange-500 rounded-lg md:p-4 text-white">
           Get offer
         </button>
       </div>
-      <img src={item.img} onDragStart={handleDragStart} role="presentation" />
+      <img src={item.img} onDragStart={handleDragStart} alt="presentation" />
     </a>
   );
 });
 
 function Carousel() {
   return (
-    <section className="relative h-auto">
+    <section className="relative w-full flex flex-col justify-center items-center h-auto">
       <AliceCarousel
         mouseTracking
         items={items}
@@ -56,8 +56,9 @@ function Carousel() {
         autoPlayInterval={2000}
         autoPlayStrategy={"all"}
         disableButtonsControls={true}
-        disableDotsControls={false}
+        disableDotsControls={true}
       />
+      <Search />
     </section>
   );
 }

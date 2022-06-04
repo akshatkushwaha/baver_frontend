@@ -7,7 +7,7 @@ function TopHoreca(propa) {
       <section className="py-8 px-2 flex flex-col justify-center items-center">
         <div className="container relative text-center py-4 flex flex-col items-center">
           <h1 className="text-4xl font-extrabold">
-            Top Places <span className="text-orange-400">Listing</span>
+            Top <span className="text-orange-400">Horeca</span>
           </h1>
           <p className="text-lg font-sans py-2">
             At Vero Eos Et Accusamus Et Iusto Odio Dignissimos Ducimus Qui
@@ -30,9 +30,9 @@ function TopHoreca(propa) {
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
               <circle cx="12" cy="12" r="10" />
               <polyline points="12 8 8 12 12 16" />
@@ -72,9 +72,9 @@ function TopHoreca(propa) {
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
               <circle cx="12" cy="12" r="10" />
               <polyline points="12 16 16 12 12 8" />

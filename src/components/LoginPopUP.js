@@ -1,9 +1,13 @@
 import GSIbutton from "./GSIbutton";
 import { useState } from "react";
+import LoadingSpin from "react-loading-spin";
+import axios from "axios";
+import { sha512 } from "crypto-hash";
+// import bcrypt from "bcryptjs/dist/bcrypt";
 
 function LoginPopup(props) {
-  const [loginSection, setLoginSection] = useState(true);
-  const [registerSection, setRegisterSection] = useState(false);
+  const [loginForm, setLoginForm] = useState(true);
+  const [registerForm, setRegisterForm] = useState(false);
   const [errorBox, setErrorBox] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -15,56 +19,69 @@ function LoginPopup(props) {
   const [cpassword, setCPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(true);
 
-  function validateEmail(email) {
-    return String(email)
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
+  function resetForm() {
+    setName("");
+    setEmail("");
+    setPassword("");
+    setCPassword("");
+    setRememberMe(true);
+    setActiveSubmitButton(true);
   }
 
-  function handleNativeLogin() {
-    setErrorMessage("");
-    if (email.length === 0 || !validateEmail(email)) {
-      setErrorMessage("Please enter a valid email address");
-    } else if (password.length === 0) {
-      setErrorMessage("Please enter a password");
-    }
+  async function handleNativeLogin(event, { email, password }) {
+    event.preventDefault();
 
-    if (errorMessage.length !== 0) {
-      setErrorBox(true);
-    } else {
-      setErrorBox(false);
-      setActiveSubmitButton(false);
+    setActiveSubmitButton(false);
+    try {
+      const hashedPassword = await sha512(password);
+      console.log(hashedPassword);
+      const response = await axios.post("http://localhost:8000/api/login", {
+        email: email,
+        password: hashedPassword,
+      });
       var storage = localStorage;
       if (rememberMe === false) {
         storage = sessionStorage;
       }
-      // call API for login
+      storage.setItem("token", response.data.data.token);
+      window.location.reload();
+    } catch (error) {
+      setErrorBox(true);
+      setErrorMessage(error.response.data.message);
+      resetForm();
     }
   }
 
-  function handleNativeRegistration() {
-    setErrorMessage("");
-    if (name.length === 0) {
-      setErrorMessage("Please enter your name");
-    } else if (email.length === 0 || !validateEmail(email)) {
-      setErrorMessage("Please enter a valid email address");
-    } else if (password.length === 0) {
-      setErrorMessage("Please enter a password");
-    } else if (password !== cpassword) {
+  async function handleNativeRegistration(
+    event,
+    { name, email, password, cpassword }
+  ) {
+    event.preventDefault();
+    if (password !== cpassword) {
+      setErrorBox(true);
       setErrorMessage("Passwords do not match");
+      return;
     }
-    if (errorMessage.length !== 0) {
-      setErrorBox(true);
-    } else {
-      setErrorBox(false);
-      setActiveSubmitButton(false);
+
+    setActiveSubmitButton(false);
+    try {
+      const hashedPassword = await sha512(password);
+      const response = await axios.post("http://localhost:8000/api/register", {
+        name: name,
+        email: email,
+        password: hashedPassword,
+        c_password: hashedPassword,
+      });
       var storage = localStorage;
       if (rememberMe === false) {
         storage = sessionStorage;
       }
-      // call API for registration
+      storage.setItem("token", response.data.data.token);
+      window.location.reload();
+    } catch (error) {
+      setErrorBox(true);
+      setErrorMessage(error.response.data.message);
+      resetForm();
     }
   }
 
@@ -99,13 +116,18 @@ function LoginPopup(props) {
             </button>
             <div
               className={`${
-                loginSection ? "flex" : "hidden"
+                loginForm ? "flex" : "hidden"
               } py-6 flex-col justify-center items-center`}
             >
               <h3 className="mb-4 text-2xl font-medium text-gray-900 dark:text-white text-center ">
                 Sign in
               </h3>
-              <section className="space-y-6 w-3/4">
+              <form
+                className="space-y-6 w-3/4"
+                onSubmit={(event) => {
+                  handleNativeLogin(event, { email, password });
+                }}
+              >
                 <div>
                   <label
                     htmlFor="email"
@@ -181,26 +203,35 @@ function LoginPopup(props) {
                   </a>
                 </div>
                 <button
+                  type="submit"
+                  disabled={!activeSubmitButton}
                   className={`${
                     activeSubmitButton
                       ? "bg-orange-400 hover:bg-orange-500 focus:ring-orange-300"
                       : "bg-gray-500"
-                  } w-full text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center`}
-                  onClick={() => {
-                    handleNativeLogin();
-                  }}
+                  } w-full text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center`}
                 >
-                  Login
+                  {activeSubmitButton ? (
+                    "Sign in"
+                  ) : (
+                    <LoadingSpin
+                      width="2px"
+                      size="20px"
+                      primaryColor="#000"
+                      secondaryColor="#fff"
+                    />
+                  )}
                 </button>
-              </section>
+              </form>
               <div className="text-sm font-medium text-gray-500 dark:text-gray-300 pt-4">
                 Not registered?
                 <button
                   className="text-blue-700 hover:underline dark:text-blue-500 px-2"
                   onClick={() => {
-                    setLoginSection(false);
-                    setRegisterSection(true);
+                    setLoginForm(false);
+                    setRegisterForm(true);
                     setErrorBox(false);
+                    setActiveSubmitButton(true);
                   }}
                 >
                   Create account
@@ -209,16 +240,26 @@ function LoginPopup(props) {
             </div>
             <div
               className={`${
-                registerSection ? "flex" : "hidden"
+                registerForm ? "flex" : "hidden"
               } py-6 flex-col justify-center items-center`}
             >
               <h3 className="mb-4 text-2xl font-medium text-gray-900 dark:text-white text-center">
                 Register
               </h3>
-              <section className="space-y-6 w-3/4">
+              <form
+                className="space-y-6 w-3/4"
+                onSubmit={(event) => {
+                  handleNativeRegistration(event, {
+                    name,
+                    email,
+                    password,
+                    cpassword,
+                  });
+                }}
+              >
                 <div>
                   <label
-                    htmlFor="email"
+                    htmlFor="name"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                   >
                     Full name
@@ -303,25 +344,33 @@ function LoginPopup(props) {
                 </div>
 
                 <button
+                  type="submit"
+                  disabled={!activeSubmitButton}
                   className={`${
                     activeSubmitButton
                       ? "bg-orange-400 hover:bg-orange-500 focus:ring-orange-300"
                       : "bg-gray-500"
                   } w-full text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center`}
-                  onClick={() => {
-                    handleNativeRegistration();
-                  }}
                 >
-                  Register
+                  {activeSubmitButton ? (
+                    "Register"
+                  ) : (
+                    <LoadingSpin
+                      width="2px"
+                      size="20px"
+                      primaryColor="#000"
+                      secondaryColor="#fff"
+                    />
+                  )}
                 </button>
-              </section>
+              </form>
               <div className="text-sm font-medium text-gray-500 dark:text-gray-300 pt-4">
                 Already a user?
                 <button
                   className="text-blue-700 hover:underline dark:text-blue-500 px-2"
                   onClick={() => {
-                    setLoginSection(true);
-                    setRegisterSection(false);
+                    setLoginForm(true);
+                    setRegisterForm(false);
                     setErrorBox(false);
                     setActiveSubmitButton(true);
                   }}

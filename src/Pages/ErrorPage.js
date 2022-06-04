@@ -3,7 +3,6 @@ import Navbar from "../components/Navbar";
 function ErrorPage(props) {
   return (
     <>
-      <Navbar isLoggedin={props.isLoggedin} />
       <main class="h-full w-full flex flex-col justify-center items-center bg-slate-200 py-40 ">
         <h1 class="text-9xl font-extrabold text-gray-800 tracking-widest">
           404

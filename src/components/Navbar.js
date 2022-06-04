@@ -3,8 +3,6 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 
 export default function Navbar(props) {
-  const username = localStorage.getItem("username");
-  const picture = localStorage.getItem("pictureURL");
   var navigation = [
     { name: "Home", href: "/", current: false },
     { name: "About", href: "/about", current: false },
@@ -12,13 +10,12 @@ export default function Navbar(props) {
     { name: "+ Add Listing", href: "/addlisting", current: false },
   ];
 
-  if (props.location === "home") {
-    navigation[0].current = true;
-  } else if (props.location === "about") {
-    navigation[1].current = true;
-  } else if (props.location === "contact") {
-    navigation[2].current = true;
-  }
+  const url = window.location.pathname;
+  const current = navigation.find((item) => {
+    if (item.href === url) {
+      return (item.current = true);
+    }
+  });
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -136,7 +133,7 @@ export default function Navbar(props) {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src={picture}
+                        src={props.pictureURL}
                         alt=""
                       />
                     </Menu.Button>
@@ -165,7 +162,7 @@ export default function Navbar(props) {
                     <Menu.Items className="z-50 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         <a
-                          href={`/${username}`}
+                          href={`/${props.username}`}
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         >
                           Your profile
@@ -177,6 +174,7 @@ export default function Navbar(props) {
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                           onClick={() => {
                             localStorage.clear();
+                            sessionStorage.clear();
                           }}
                         >
                           Sign out
