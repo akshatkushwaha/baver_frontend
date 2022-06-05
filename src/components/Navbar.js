@@ -1,8 +1,10 @@
-/* This example requires Tailwind CSS v2.0+ */
+import { useSelector } from "react-redux";
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 
 export default function Navbar(props) {
+  const userData = useSelector((state) => state.userData);
+  console.log(userData);
   var navigation = [
     { name: "Home", href: "/", current: false },
     { name: "About", href: "/about", current: false },
@@ -129,12 +131,12 @@ export default function Navbar(props) {
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="ml-3 relative">
-                  {props.isLoggedin ? (
+                  {userData.active ? (
                     <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src={props.pictureURL}
+                        src={userData.profile_photo_url}
                         alt=""
                       />
                     </Menu.Button>
@@ -163,7 +165,7 @@ export default function Navbar(props) {
                     <Menu.Items className="z-50 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         <a
-                          href={`/${props.username}`}
+                          href={`/${userData.email}`}
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         >
                           Your profile

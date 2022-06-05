@@ -1,8 +1,8 @@
 import GSIbutton from "./GSIbutton";
 import { useState } from "react";
 import LoadingSpin from "react-loading-spin";
-import axios from "axios";
 import { sha512 } from "crypto-hash";
+import { postLogin, postRegister } from "../api";
 // import bcrypt from "bcryptjs/dist/bcrypt";
 
 function LoginPopup(props) {
@@ -35,19 +35,16 @@ function LoginPopup(props) {
     try {
       const hashedPassword = await sha512(password);
       console.log(hashedPassword);
-      const response = await axios.post("http://localhost:8000/api/login", {
-        email: email,
-        password: hashedPassword,
-      });
+      const response = await postLogin(email, hashedPassword);
       var storage = localStorage;
       if (rememberMe === false) {
         storage = sessionStorage;
       }
-      storage.setItem("token", response.data.data.token);
+      storage.setItem("token", response.data.token);
       window.location.reload();
     } catch (error) {
       setErrorBox(true);
-      setErrorMessage(error.response.data.message);
+      setErrorMessage(error.response.message);
       resetForm();
     }
   }
@@ -66,12 +63,7 @@ function LoginPopup(props) {
     setActiveSubmitButton(false);
     try {
       const hashedPassword = await sha512(password);
-      const response = await axios.post("http://localhost:8000/api/register", {
-        name: name,
-        email: email,
-        password: hashedPassword,
-        c_password: hashedPassword,
-      });
+      const response = await postRegister(name, email, hashedPassword);
       var storage = localStorage;
       if (rememberMe === false) {
         storage = sessionStorage;
@@ -90,7 +82,7 @@ function LoginPopup(props) {
       <div
         className={`${
           props.loginPopup ? "flex" : "hidden"
-        } absolute top-0 w-full h-full items-center justify-center backdrop-blur-sm backdrop-grayscale-[.5] w3-container w3-animate-top z-50`}
+        } fixed top-0 w-full h-full items-center justify-center backdrop-blur-sm backdrop-grayscale-[.5] w3-container w3-animate-top z-50`}
       >
         <div className="relative p-4 w-full max-w-md h-full md:h-auto">
           <div className="relative bg-white rounded-lg shadow dark:bg-gray-700 pb-4">

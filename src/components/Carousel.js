@@ -9,19 +9,19 @@ const carouselsource = [
     offer: "Some offer",
     offerDetails:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat odio id nunc tincidunt, sit amet laoreet libero scelerisque.",
-    img: "https://github.com/akshatkushwaha/baver_frontend/blob/master/src/assets/img/carousel-1.jpg?raw=true",
+    img: "https://raw.githubusercontent.com/akshatkushwaha/baver_frontend/master/src/assets/img/Collage_compressed.jpg",
   },
   {
     offer: "Some offer",
     offerDetails:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat odio id nunc tincidunt, sit amet laoreet libero scelerisque.",
-    img: "https://github.com/akshatkushwaha/baver_frontend/blob/master/src/assets/img/carousel-1.jpg?raw=true",
+    img: "https://raw.githubusercontent.com/akshatkushwaha/baver_frontend/master/src/assets/img/Collage_compressed.jpg",
   },
   {
     offer: "Some offer",
     offerDetails:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat odio id nunc tincidunt, sit amet laoreet libero scelerisque.",
-    img: "https://github.com/akshatkushwaha/baver_frontend/blob/master/src/assets/img/carousel-1.jpg?raw=true",
+    img: "https://raw.githubusercontent.com/akshatkushwaha/baver_frontend/master/src/assets/img/Collage_compressed.jpg",
   },
 ];
 
