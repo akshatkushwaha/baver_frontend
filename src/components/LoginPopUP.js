@@ -2,7 +2,7 @@ import GSIbutton from "./GSIbutton";
 import { useState } from "react";
 import LoadingSpin from "react-loading-spin";
 import { sha512 } from "crypto-hash";
-import { postLogin, postRegister } from "../api";
+import { postLogin, postRegister } from "../api/auth";
 // import bcrypt from "bcryptjs/dist/bcrypt";
 
 function LoginPopup(props) {
@@ -34,7 +34,6 @@ function LoginPopup(props) {
     setActiveSubmitButton(false);
     try {
       const hashedPassword = await sha512(password);
-      console.log(hashedPassword);
       const response = await postLogin(email, hashedPassword);
       var storage = localStorage;
       if (rememberMe === false) {

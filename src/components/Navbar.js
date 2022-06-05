@@ -1,15 +1,15 @@
 import { useSelector } from "react-redux";
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { postLogout } from "../api/auth";
 
 export default function Navbar(props) {
   const userData = useSelector((state) => state.userData);
-  console.log(userData);
   var navigation = [
     { name: "Home", href: "/", current: false },
     { name: "About", href: "/about", current: false },
     { name: "Contact", href: "/contact", current: false },
-    { name: "+ Add Listing", href: "/addlisting", current: false },
+    { name: "+ Add Listing", href: "/listing/add", current: false },
   ];
 
   const url = window.location.pathname;
@@ -28,7 +28,7 @@ export default function Navbar(props) {
     <Disclosure
       as="nav"
       style={{ backgroundColor: "#2A3844" }}
-      className="sticky top-0 z-50"
+      className="sticky top-0 z-10"
     >
       {({ open }) => (
         <>
@@ -165,7 +165,7 @@ export default function Navbar(props) {
                     <Menu.Items className="z-50 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         <a
-                          href={`/${userData.email}`}
+                          href={`/user/${userData.email}`}
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         >
                           Your profile
@@ -176,6 +176,7 @@ export default function Navbar(props) {
                           href="/"
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                           onClick={() => {
+                            postLogout();
                             localStorage.clear();
                             sessionStorage.clear();
                           }}
