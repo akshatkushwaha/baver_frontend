@@ -1,6 +1,6 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { setLoginStatus } from "./redux/reducers/userData";
+import { userDataSlice } from "./redux/userData/slice";
 import { fetchProfile } from "./api/auth";
 import { useState } from "react";
 import About from "./Pages/About";
@@ -24,7 +24,7 @@ function App() {
 
   async function setUserData() {
     const data = await fetchProfile().then((res) => res.data);
-    dispatch(setLoginStatus(data));
+    dispatch(userDataSlice.actions.setLoginStatus(data));
     setProfileLodingBanner(false);
   }
 

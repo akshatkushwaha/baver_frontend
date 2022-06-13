@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import { setLoginStatus, setLogoutStatus } from "./reducers";
+
 export const userDataSlice = createSlice({
   name: "userData",
   initialState: {
@@ -20,12 +22,11 @@ export const userDataSlice = createSlice({
     updatedAt: "",
   },
   reducers: {
-    setLoginStatus: (state, action) => {
-      return { ...state, ...action.payload };
-    },
+    setLoginStatus,
+    setLogoutStatus,
   },
 });
 
-export const { setLoginStatus } = userDataSlice.actions;
+// export const { setLoginStatus } = userDataSlice.actions;
 
-export default userDataSlice.reducer;
+// export default userDataSlice.reducer;

@@ -33,3 +33,31 @@ code {
 .hide-scroll-bar::-webkit-scrollbar {
   display: none;
 }
+
+.background-baver-100{
+  background-color: #e48c24;
+}
+
+.background-baver-200{
+  background-color: #FA983A;
+}
+
+.background-baver-300{
+  background-color: #fb9c31;
+}
+
+.background-baver-400{
+  background-color: #f7c347;
+}
+
+.background-baver-500{
+  background-color: #fc7c14;
+}
+
+.background-mandvi-100{
+  background-color: #27333a;
+}
+
+.background-mandvi-200{
+  background-color: #747474;
+}
